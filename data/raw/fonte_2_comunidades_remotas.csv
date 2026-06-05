@@ -1,0 +1,11 @@
+﻿id_comunidade,nome_comunidade,estado,tipo_regiao,latitude,longitude,distancia_hospital_km,tempo_deslocamento_min,tem_posto_apoio,tem_transporte_disponivel,barreira_natural,nivel_isolamento
+1,Comunidade Rio Azul,AM,ribeirinha,-3.3102,-60.0217,180.0,360,S,N,rio,alto
+2,Vila Serra Norte,PA,floresta,-1.4558,-48.5044,95.0,210,S,S,estrada_precaria,medio
+3,Aldeia Sol Nascente,RR,aldeia,2.8197,-60.6733,140.0,300,N,N,floresta,alto
+4,Ilha Esperança,MA,ilha,-2.5297,-44.3028,120.0,240,S,N,rio,alto
+5,Distrito Campo Verde,MT,rural,-15.601,-56.0974,65.0,110,S,S,estrada_precaria,medio
+6,Comunidade Pedra Branca,BA,rural,-12.9714,-38.5014,45.0,80,S,S,nenhum,baixo
+7,Povoado Lago Fundo,TO,ribeirinha,-10.1843,-48.3336,160.0,330,N,N,rio,alto
+8,Vila Horizonte,RO,floresta,-8.7608,-63.8999,105.0,220,S,N,floresta,alto
+9,Comunidade São Miguel,AC,rural,-9.9747,-67.8243,75.0,150,S,S,estrada_precaria,medio
+10,Base Saúde Pantanal,MS,rural,-20.4697,-54.6201,55.0,100,S,S,nenhum,baixo
