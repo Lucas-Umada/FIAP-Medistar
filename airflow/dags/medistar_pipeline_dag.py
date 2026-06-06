@@ -26,6 +26,14 @@ with DAG(
         """
     )
 
+    configurar_banco = BashOperator(
+        task_id="configurar_banco",
+        bash_command="""
+        cd /opt/airflow &&
+        python scripts/setup_database.py
+        """
+    )
+
     transformar_dados = BashOperator(
         task_id="transformar_dados",
         bash_command="""
@@ -56,4 +64,4 @@ with DAG(
         task_id="fim"
     )
 
-    inicio >> validar_arquivos >> transformar_dados >> carregar_oracle >> validar_saida >> fim
+    inicio >> validar_arquivos >> configurar_banco >> transformar_dados >> carregar_oracle >> validar_saida >> fim
