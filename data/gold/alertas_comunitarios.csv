@@ -1,0 +1,2 @@
+﻿id_alerta,id_comunidade,grupo_sintoma,quantidade_casos,periodo_dias,nivel_alerta,descricao_alerta,data_alerta
+1,1,febril,5,2,alto,5 casos do grupo febril na mesma comunidade em 2 dias,2026-06-05

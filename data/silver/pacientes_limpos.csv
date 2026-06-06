@@ -1,0 +1,31 @@
+﻿id_atendimento,id_paciente,nome_paciente,idade,sexo,id_comunidade,data_atendimento,sintoma_principal,grupo_sintoma,temperatura_corporal,dias_com_sintomas,urgencia_informada_agente
+1,1001,ana souza,34,feminino,1,2026-06-07,febre,febril,38.2,2,media
+2,1002,joão lima,48,masculino,1,2026-06-07,dor no corpo,febril,37.9,2,media
+3,1003,marina costa,27,feminino,1,2026-06-08,febre e mal-estar,febril,38.5,1,alta
+4,1004,carlos mendes,62,masculino,1,2026-06-08,calafrios,febril,38.1,3,alta
+5,1005,beatriz rocha,41,feminino,1,2026-06-08,febre persistente,febril,39.0,4,alta
+6,1006,pedro alves,22,masculino,2,2026-06-08,tosse seca,respiratorio,37.5,3,media
+7,1007,luciana martins,55,feminino,2,2026-06-07,falta de ar leve,respiratorio,37.8,2,alta
+8,1008,rafael gomes,19,masculino,2,2026-06-06,dor de garganta,respiratorio,37.2,1,baixa
+9,1009,camila santos,36,feminino,3,2026-06-08,náusea,gastrointestinal,36.9,1,baixa
+10,1010,andré ferreira,44,masculino,3,2026-06-07,diarreia,gastrointestinal,37.4,2,media
+11,1011,patrícia nunes,31,feminino,3,2026-06-07,dor abdominal,gastrointestinal,37.0,3,media
+12,1012,bruno carvalho,67,masculino,4,2026-06-08,febre,febril,38.7,2,alta
+13,1013,renata dias,52,feminino,4,2026-06-06,cansaço intenso,respiratorio,37.6,4,media
+14,1014,felipe barros,29,masculino,4,2026-06-05,dor no peito leve,dor,36.8,1,alta
+15,1015,juliana castro,46,feminino,5,2026-06-08,manchas na pele,pele,37.1,5,media
+16,1016,rodrigo moreira,38,masculino,5,2026-06-07,coceira intensa,pele,36.7,3,baixa
+17,1017,fernanda ribeiro,24,feminino,5,2026-06-06,ferida inflamada,pele,37.3,4,media
+18,1018,márcio teixeira,58,masculino,6,2026-06-08,dor lombar,dor,36.6,6,media
+19,1019,sabrina lopes,33,feminino,6,2026-06-07,enxaqueca,dor,36.9,2,baixa
+20,1020,eduardo pinto,71,masculino,6,2026-06-07,dor nas articulações,dor,37.2,7,media
+21,1021,aline cardoso,40,feminino,7,2026-06-08,febre,febril,38.4,2,alta
+22,1022,gustavo vieira,26,masculino,7,2026-06-08,tosse com febre,respiratorio,38.0,3,alta
+23,1023,priscila moraes,49,feminino,7,2026-06-06,mal-estar,febril,37.8,2,media
+24,1024,diego araújo,35,masculino,8,2026-06-08,diarreia,gastrointestinal,37.5,1,media
+25,1025,tatiane freitas,60,feminino,8,2026-06-07,vômito,gastrointestinal,37.9,2,alta
+26,1026,leonardo batista,28,masculino,8,2026-06-05,dor abdominal,gastrointestinal,36.8,1,baixa
+27,1027,mônica almeida,53,feminino,9,2026-06-08,tosse,respiratorio,37.4,4,media
+28,1028,thiago ramos,47,masculino,9,2026-06-07,febre baixa,febril,37.8,1,media
+29,1029,helena duarte,65,feminino,10,2026-06-08,fraqueza,outros,36.5,5,media
+30,1030,vinícius correia,32,masculino,10,2026-06-06,tontura,outros,36.7,2,baixa
