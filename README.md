@@ -45,6 +45,7 @@ medistar-bddi/
 │   └── gold/
 │
 ├── scripts/
+│   ├── setup_database.py
 │   ├── transform_medistar.py
 │   └── load_database.py
 │
@@ -54,7 +55,6 @@ medistar-bddi/
 │   └── analytics_queries.sql
 │
 ├── .env
-├── .gitignore
 ├── requirements.txt
 └── README.md
 ```
@@ -145,7 +145,7 @@ python -m pip freeze > requirements.txt
 
 ---
 
-## Configuração das variáveis de ambiente
+## Configuração das variáveis de ambiente do projeto
 
 Na raiz do projeto, crie o arquivo:
 
@@ -165,19 +165,25 @@ ORACLE_PORT=1521
 ORACLE_SID=ORCL
 ```
 
-Não suba esse arquivo para o GitHub.
+Esse arquivo é utilizado pelos scripts Python para acessar a OpenWeather API e o Oracle Database.
 
 ---
 
-## Configuração do banco de dados
+## Scripts principais
 
-Antes de carregar os dados, execute o script de criação das tabelas no Oracle:
+### `scripts/setup_database.py`
+
+Configura automaticamente o banco de dados.
+
+Esse script lê o arquivo:
 
 ```text
 sql/create_tables.sql
 ```
 
-As tabelas criadas são:
+Ele verifica se as tabelas necessárias já existem no Oracle. Caso alguma tabela ainda não exista, o script executa os comandos de criação automaticamente.
+
+Tabelas criadas:
 
 ```text
 TB_COMUNIDADE
@@ -187,23 +193,9 @@ TB_TRIAGEM_PRIORIDADE
 TB_ALERTA_COMUNITARIO
 ```
 
-Caso precise apagar e recriar as tabelas, use:
+### `scripts/transform_medistar.py`
 
-```text
-sql/drop_tables.sql
-```
-
----
-
-## Executando o pipeline manualmente
-
-Antes de rodar pelo Airflow, é possível testar os scripts manualmente.
-
-### 1. Rodar transformação dos dados
-
-```powershell
-python scripts/transform_medistar.py
-```
+Executa a transformação dos dados.
 
 Esse script realiza:
 
@@ -227,13 +219,43 @@ data/gold/triagem_prioridade.csv
 data/gold/alertas_comunitarios.csv
 ```
 
-### 2. Carregar dados no Oracle
+### `scripts/load_database.py`
+
+Carrega os dados tratados no Oracle Database.
+
+Esse script insere os dados nas tabelas:
+
+```text
+TB_COMUNIDADE
+TB_ATENDIMENTO
+TB_CLIMA
+TB_TRIAGEM_PRIORIDADE
+TB_ALERTA_COMUNITARIO
+```
+
+---
+
+## Testando o pipeline manualmente
+
+Antes de rodar pelo Airflow, é possível testar os scripts manualmente.
+
+### 1. Configurar o banco automaticamente
+
+```powershell
+python scripts/setup_database.py
+```
+
+### 2. Rodar a transformação dos dados
+
+```powershell
+python scripts/transform_medistar.py
+```
+
+### 3. Carregar os dados no Oracle
 
 ```powershell
 python scripts/load_database.py
 ```
-
-Esse script carrega os dados tratados nas tabelas do Oracle.
 
 ---
 
@@ -285,17 +307,15 @@ volumes:
   - ../.env:/opt/airflow/.env
 ```
 
+Esses volumes permitem que o Airflow acesse os scripts Python, arquivos CSV, scripts SQL e variáveis de ambiente do projeto.
+
 ---
 
 ## Subindo o Airflow
 
+Antes de executar os comandos, abra o **Docker Desktop** e aguarde o Docker Engine iniciar.
+
 Dentro da pasta `airflow`, execute a inicialização:
-
-```powershell
-docker compose up airflow-init
-```
-
-Depois suba os containers:
 
 ```powershell
 docker compose up -d
@@ -343,6 +363,8 @@ inicio
 ↓
 validar_arquivos
 ↓
+configurar_banco
+↓
 transformar_dados
 ↓
 carregar_oracle
@@ -364,13 +386,19 @@ Marca o início do pipeline.
 
 Verifica se os arquivos CSV obrigatórios existem na pasta `data/raw`.
 
+### `configurar_banco`
+
+Executa o script `setup_database.py`.
+
+Essa etapa verifica se as tabelas necessárias já existem no Oracle Database. Caso ainda não existam, as tabelas são criadas automaticamente com base no arquivo `sql/create_tables.sql`.
+
 ### `transformar_dados`
 
 Executa o script `transform_medistar.py`, responsável por tratar os dados, consultar a OpenWeather e gerar os arquivos processados.
 
 ### `carregar_oracle`
 
-Executa o script `load_database.py`, responsável por carregar os dados no Oracle Database.
+Executa o script `load_database.py`, responsável por carregar os dados tratados no Oracle Database.
 
 ### `validar_saida`
 
@@ -419,42 +447,12 @@ docker compose up -d
 
 ---
 
-## Arquivos ignorados pelo Git
-
-O projeto deve ignorar arquivos sensíveis e temporários, como:
-
-```gitignore
-.venv/
-__pycache__/
-*.pyc
-
-.env
-airflow/.env
-
-airflow/logs/
-logs/
-
-*.log
-.DS_Store
-Thumbs.db
-```
-
----
-
-## Observações importantes
-
-- O arquivo `.env` da raiz contém credenciais e não deve ser enviado para repositórios públicos.
-- O arquivo `airflow/.env` é usado apenas para configuração do Docker/Airflow.
-- A pasta `airflow/logs` pode gerar muitos arquivos e deve ser ignorada pelo Git.
-- A OpenWeather é consultada uma vez por comunidade e o resultado é salvo em cache local.
-- Antes de rodar a DAG no Airflow, garanta que as tabelas já foram criadas no Oracle.
-
----
-
 ## Resultado esperado
 
 Ao final da execução, o pipeline deve:
 
+- Validar os arquivos CSV de entrada.
+- Configurar automaticamente as tabelas no Oracle, caso ainda não existam.
 - Ler os dados de pacientes e comunidades.
 - Consultar dados climáticos reais pela OpenWeather.
 - Gerar arquivos tratados nas camadas `silver` e `gold`.
